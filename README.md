@@ -1,365 +1,226 @@
-# 🚩 Challenge #0: 🎟 Simple Counter Example
+# 🚩 Challenge #14: 🎨 Farcaster NFT Mini App
 
-🎫 Create a simple Counter:
+🎨 Create an NFT Mini App with Farcaster integration:
 
-👷‍♀️ You'll compile and deploy your first smart contracts. Then, you'll use a template React app full of important components and hooks. Finally, you'll deploy a Counter contract written in RUST to a public network to share with friends! 🚀
+👷‍♀️ Build a complete NFT minting application using Stylus smart contracts written in Rust, integrated with Farcaster for social interactions. Deploy your NFT contract to Arbitrum Sepolia testnet and create a beautiful frontend for users to mint and manage their NFTs! 🚀
 
-🌟 The final deliverable is an app that lets users interact with the counter contract. Deploy your contracts to a testnet, then build and upload your app to a public web server.
+🌟 The final deliverable is a full-stack NFT application that allows users to mint NFTs, view their collection, and interact with the Farcaster ecosystem.
 
-## Checkpoint 0: 📦 Prerequisites 📚
+## 📦 Prerequisites
 
 Before starting, ensure you have the following installed:
 
 - [Node.js (>= v18.17)](https://nodejs.org/en/download/)
-- [Yarn](https://classic.yarnpkg.com/en/docs/install/)
+- [pnpm](https://pnpm.io/installation) - Package manager
 - [Git](https://git-scm.com/downloads)
-- [WSL (for Windows users)](https://www.geeksforgeeks.org/how-to-install-wsl2-windows-subsystem-for-linux-2-on-windows-10/)
-- [Docker](https://docs.docker.com/get-docker/)
-- [Curl](https://gcore.com/learning/how-to-install-curl-on-ubuntu)
-- [Rust](https://rustup.rs/) (including `rustc`, `rustup`, and `cargo`) - Install with (⚠️ **Must use WSL terminal to run these commands**):
-
-  ```bash
-  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  ```
-
-  ```bash
-  source ~/.bashrc  # or restart your terminal
-  ```
-
-- cargo-stylus  
-  -> Install cargo-stylus with the below command:
+- [WSL (for Windows users)](https://www.geeksforgeeks.org/how-to-install-wsl2-windows-subsystem-for-linux-2-on-windows-10/) - ⚠️ **Use WSL terminal for Windows**
+- [Docker](https://docs.docker.com/get-docker/) - Required for running Nitro dev node
+- [Rust](https://rustup.rs/) (including `rustc`, `rustup`, and `cargo`)
+- [cargo-stylus](https://docs.arbitrum.io/stylus/stylus-gentle-intro) - Install with:
 
   ```bash
   cargo install cargo-stylus
   ```
 
-- [Foundry](https://getfoundry.sh/introduction/installation/) - Required for smart contract development
+## ✨ Features
 
-### Foundry Installation Steps:
+- **Minimal, production-ready React (Vite + Tailwind) frontend**
+- **Wallet connection (wagmi + viem)** with support for Farcaster Frame and browser wallets
+- **Arbitrum Stylus NFT contract (Rust, OpenZeppelin crate, ERC721)**
+- **Easy contract ABI/address injection**
+- **Farcaster manifest and frame meta integration**
+- **Simple UI**: Connect wallet, mint NFT, view NFT gallery, share to Farcaster
 
-#### 1. Open your WSL terminal.
+## ⚡ Quick Start
 
-#### 2. Install Foundry using the official install script:
-
-```bash
-curl -L https://foundry.paradigm.xyz | bash
-```
-
-#### 3. Add Foundry to your shell profile
-
-After installation, you'll see instructions to add Foundry to your shell profile (like .bashrc or .zshrc). Usually, you can do:
+### Step 1: Clone the Repository
 
 ```bash
-export PATH="$HOME/.foundry/bin:$PATH"
-```
-
-Add the above line to your ~/.bashrc or ~/.zshrc file, then reload your shell:
-
-```bash
-source ~/.bashrc
+git clone -b nft-miniapp https://github.com/abhi152003/speedrun_stylus.git stylus_nft_miniapp
 ```
 
 ```bash
-source ~/.zshrc
-```
-
-#### 4. Install Foundry binaries
-
-```bash
-foundryup
-```
-
----
-
-### 🔧 Version Requirements
-
-Ensure your tools are ready to use:
-
-#### Check your versions - ⚠️ **Must use WSL terminal to run these commands**
-
-```bash
-cargo stylus --version
+cd stylus_nft_miniapp
 ```
 
 ```bash
-cargo --version
+pnpm install
 ```
 
-```bash
-rustup --version
-```
+### Step 2: Run Nitro Dev Node Locally
 
-```bash
-rustc --version
-```
-
-```bash
-curl --version
-```
-
-```bash
-cast --version
-```
-
-```bash
-forge --version
-```
-
-
-### 🚩 Challenge Setup Instructions
-
-#### For Ubuntu/Mac Users:
-
-1. Open your terminal.
-2. Clone the repository:
+1. Clone the nitro-devnode repository:
 
    ```bash
-   git clone -b counter https://github.com/abhi152003/speedrun_stylus.git speedrun_stylus_counter
+   git clone https://github.com/OffchainLabs/nitro-devnode
+   cd nitro-devnode
    ```
 
-   ```bash
-   cd speedrun_stylus_counter
-   ```
-
-   ```bash
-   yarn install
-   ```
-
-3. Start the local devnode in Docker:
-
-   ```bash
-   cd packages/stylus-demo
-   ```
+2. Run the dev node script in WSL terminal for Windows:
 
    ```bash
    bash run-dev-node.sh
    ```
 
-4. In a second terminal window, start your frontend:
+> 📚 **Reference**: For more detailed information about running a Nitro dev node, see the [Arbitrum documentation](https://docs.arbitrum.io/run-arbitrum-node/run-nitro-dev-node).
+
+### Step 3: Deploy NFT Contract to Arbitrum Sepolia
+
+1. Navigate back to the NFT mini app contracts directory:
 
    ```bash
-   cd speedrun_stylus_counter/packages/nextjs
+   cd contracts/template
    ```
+
+2. Deploy the NFT contract to Arbitrum Sepolia:
 
    ```bash
-   yarn run dev
+   cargo stylus deploy --endpoint='https://sepolia-rollup.arbitrum.io/rpc' --private-key="0xYOUR_PRIVATE_KEY" --no-verify
    ```
 
-5. Open [http://localhost:3000](http://localhost:3000) to see the app.
+> ⚠️ **Important**: Replace `0xYOUR_PRIVATE_KEY` with your actual private key. The contract address returned in the terminal should be copied and replaced in the `frontend/src/App.tsx` file.
 
-#### For Windows Users (Using WSL):
+### Step 4: Start the Frontend
 
-1. Open your WSL terminal.
-2. Ensure you have set your Git username and email globally:
-
-   ```bash
-   git config --global user.name "Your Name"
-   ```
-
-   ```bash
-   git config --global user.email "your.email@example.com"
-   ```
-
-3. Clone the repository:
-
-   ```bash
-   git clone -b counter https://github.com/abhi152003/speedrun_stylus.git
-   ```
-
-   ```bash
-   cd speedrun_stylus
-   ```
-
-   ```bash
-   yarn install
-   ```
-
-
-4. Start the local devnode in Docker:
-
-   ```bash
-   cd packages/stylus-demo
-   ```
-
-   ```bash
-   bash run-dev-node.sh
-   ```
-
-5. **Copy the contract address** from the bash terminal output. You will need to paste this address into the `contractAddress` variable in the `DebugContract` component.
-
-> 💡 **Note**: If both contract addresses are the same, you don't need to do anything - you're ready to go and interact with the stylus-based smart contracts written in RUST!
-
-
-![DockerImg](https://github.com/user-attachments/assets/04159bef-cc35-442f-b67a-5e8f7033db43)
-
-<p align="center"><em>Docker_Img</em></p>
-
-6. In a second WSL terminal window, start your frontend:
-
-   ```bash
-   cd speedrun_stylus/packages/nextjs
-   ```
-
-   ```bash
-   yarn run dev
-   ```
-
-7. Open [http://localhost:3000](http://localhost:3000) to see the app.
-
-### 🛠️ Troubleshooting Common Issues
-
-#### 1. `stylus` Not Recognized
-
-If you encounter an error stating that `stylus` is not recognized as an external or internal command, run the following command in your terminal:
+Spin up the frontend locally using:
 
 ```bash
-sudo apt-get update && sudo apt-get install -y pkg-config libssl-dev
+pnpm --filter frontend dev
 ```
 
-After that, check if `stylus` is installed by running:
+### Step 5: Access Your Application
 
-```bash
-cargo stylus --version
-```
+Open your browser and navigate to [http://localhost:5173](http://localhost:5173) to see your NFT Mini App in action!
 
-If the version is displayed, `stylus` has been successfully installed and the path is correctly set.
-
-#### 2. ABI Not Generated
-
-If you face issues with the ABI not being generated, you can try one of the following solutions:
-
-- **Restart Docker Node**: Pause and restart the Docker node and the local setup of the project. You can do this by deleting all ongoing running containers and then restarting the local terminal using:
-  ```bash
-  yarn run dev
-  ```
-- **Modify the Script**: In the `run-dev-node.sh` script, replace the line:
-
-  ```bash
-  cargo stylus export-abi
-  ```
-
-  with:
-
-  ```bash
-  cargo run --manifest-path=Cargo.toml --features export-abi
-  ```
-
-- **Access Denied Issue**: If you encounter an access denied permission error during ABI generation, run the following command and then execute the script again:
-  ```bash
-  sudo chown -R $USER:$USER target
-  ```
-
-#### 3. 🚨 Fixing Line Endings and Running Shell Scripts in WSL
-
-> ⚠️ This guide provides step-by-step instructions to resolve the Command not found error caused by CRLF line endings in shell scripts when running in a WSL environment.
-
-Shell scripts created in Windows often have `CRLF` line endings, which cause issues in Unix-like environments such as WSL. To fix this:
-
-**Using `dos2unix`:**
-
-1. Install `dos2unix` (if not already installed):
-
-   ```bash
-   sudo apt install dos2unix
-   ```
-
-2. Convert the script's line endings:
-
-   ```bash
-   dos2unix run-dev-node.sh
-   ```
-
-3. Make the Script Executable:
-
-   ```bash
-   chmod +x run-dev-node.sh
-   ```
-
-4. Run the Script in WSL:
-   ```bash
-   bash run-dev-node.sh
-   ```
+🎉 **Congratulations!** You can now mint your NFTs and interact with your Stylus-based smart contract on Arbitrum Sepolia.
 
 ---
 
-## 💫 Checkpoint 1: Frontend Magic
+## 🧪 Testing Your Miniapp on Farcaster (with ngrok)
 
-> ⛽ You'll be redirected to the below page after you complete checkpoint 0
+You can preview and test your Farcaster Mini-App using the official Farcaster Mini-App Previewer. To make your local app accessible, use ngrok to tunnel both your frontend and devnode:
 
-![image](https://github.com/user-attachments/assets/e4b8dc4a-f304-43ef-8817-ae6d028beea4)
+### Sample ngrok.yml config:
 
-> Then you have to click on the debug contracts to start interacting with your contract. Click on "Debug Contracts" from the Navbar or from the Debug Contracts Div placed in the middle of the screen
-
-![image](https://github.com/user-attachments/assets/11197d34-bb2a-4ab7-8f06-3ff2dfabb67a)
-
-The interface allows you to:
-
-1. Set any number
-2. Add numbers
-3. Increment count
-4. Perform multiplications
-5. Track all transactions in the Block Explorer
-
-> After that, you can easily view all of your transactions from the Block Explorer Tab
-
-![image](https://github.com/user-attachments/assets/48ab1e39-7560-4441-b7dc-2acbdf8cedfe)
-
-💼 Take a quick look at your deploy script `run-dev-node.sh` in `speedrun-rust/packages/stylus-demo/run-dev-node.sh`.
-
-📝 If you want to edit the frontend, navigate to `speedrun-rust/packages/nextjs/app` and open the specific page you want to modify. For instance: `/debug/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-
----
-
-## Checkpoint 2: 💾 Deploy your contract! 🛰
-
-🛰 You don't need to provide any specifications to deploy your contract because contracts are automatically deployed from the `run-dev-node.sh`
-
-> You can check that below :
-
-![image](https://github.com/user-attachments/assets/d84c4d6a-be20-426b-9c68-2c021caefb29)
-
-The above command will automatically deploy the contract functions written inside `speedrun_stylus/packages/stylus-demo/src/lib.rs`
-
-> This local account will deploy your contracts, allowing you to avoid entering a personal private key because the deployment happens using the pre-funded account's private key.
-
-## Checkpoint 3: 🚢 Ship your frontend! 🚁
-
-> We are deploying all the RUST contracts at the `localhost:8547` endpoint where the nitro devnode is spinning up in Docker. You can check the network where your contract has been deployed in the frontend (http://localhost:3000):
-
-![image](https://github.com/user-attachments/assets/bb82e696-97b9-453e-a7c7-19ebb7bd607f)
-
-🚀 Deploy your NextJS App
-
-```bash
-yarn vercel
+```yaml
+tunnels:
+  web5173:
+    proto: http
+    addr: 5173
+  web8547:
+    proto: http
+    addr: 8547
 ```
 
-> Follow the steps to deploy to Vercel. Once you log in (email, github, etc), the default options should work. It'll give you a public URL.
+1. Start your tunnels with `ngrok start --all`.
+2. Update your `frontend/src/viemChains.ts` to use the HTTPS ngrok URL (e.g. `https://YOUR_NGROK_ID.ngrok.app`) for the RPC URLs.
+3. Make sure your browser wallet (e.g. MetaMask) is also using the ngrok URL as the RPC endpoint for your dev chain.
+4. Read the [ngrok docs](https://ngrok.com/docs) for setup instructions.
 
-> If you want to redeploy to the same production URL you can run `yarn vercel --prod`. If you omit the `--prod` flag it will deploy it to a preview/test URL.
+Once both tunnels are running, paste your ngrok frontend URL into the Farcaster Mini-App Previewer to test your app from anywhere!
 
-⚠️ Run the automated testing function to make sure your app passes
+## 💰 Test Wallets & Funding
+
+> **Important**: Use separate wallets for deployment vs. user interaction.
+
+### Deployer Account
+
+- **Address**: `0x3f1Eae7D46d88F08fc2F8ed27FCb2AB183EB2d0E`
+- **Private Key**: `0xb6b15c8cb491557369f3c7d2c287b053eb229daa9c22138887752191c9520659`
+
+### Test Users
+
+| Index | Address                                      | Private Key                                                          |
+| ----- | -------------------------------------------- | -------------------------------------------------------------------- |
+| 0     | `0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266` | `0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80` |
+| 1     | `0x70997970C51812dc3A010C7d01b50e0d17dc79C8` | `0x59c6995e998f97a5a0044966f0945389dc9e86dae88c7a8412f4603b6b78690d` |
+| 2     | `0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC` | `0x5de4111afa1a4b94908f83103eb1f1706367c2e68ca870fc3fb9a804cdab365a` |
+| 3     | `0x90F79bf6EB2c4f870365E785982E1f101E93b906` | `0x7c852118294e51e653712a81e05800f419141751be58f605c371e15141b007a6` |
+| 4     | `0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65` | `0x47e179ec197488593b187f80a00eb0da91f1b9d0b13f8733639f19c30a34926a` |
+| 5     | `0x9965507D1a55bcC2695C58ba16FB37d819B0A4dc` | `0x8b3a350cf5c34c9194ca85829a2df0ec3153be0318b5e2d3348e872092edffba` |
+| 6     | `0x976EA74026E726554dB657fA54763abd0C3a0aa9` | `0x92db14e403b83dfe3df233f83dfa3a0d7096f21ca9b0d6d6b8d88b2b4ec1564e` |
+| 7     | `0x14dC79964da2C08b23698B3D3cc7Ca32193d9955` | `0x4bbbf85ce3377467afe5d46f804f221813b2bb87f24d81f60f1fcdbf7cbf4356` |
+| 8     | `0x23618e81E3f5cdF7f54C3d65f7FBc0aBf5B21E8f` | `0xdbda1821b80551c9d65939329250298aa3472ba22feea921c0cf5d620ea67b97` |
+| 9     | `0xa0Ee7A142d267C1f36714E4a8F75612F20a79720` | `0x2a871d0798f97d79848a013d4936a73bf4cc922c825d33c1cf7073dff6d409c6` |
+
+### Fund User Wallets
 
 ```bash
-yarn test
+pnpm --filter scripts fund
 ```
 
----
+## 🛠️ How to Use This Template
 
-## Checkpoint 4: 📜 Contract Verification
+### 1. Customize and Deploy Your Stylus Contract
 
-You can verify your smart contract by running:
+- Edit `contracts/template/src/lib.rs` for your NFT or app logic (uses OpenZeppelin ERC721).
+- Build and deploy to Arbitrum local devnode, or Arbitrum's testnet/mainnet.
+- Export your contract's ABI (see below).
 
-```bash
-cargo stylus verify -e http://127.0.0.1:8547 --deployment-tx "$deployment_tx"
+### 2. Update the Frontend
+
+- Place your contract ABI in `frontend/src/abi/SampleNFT.json`.
+- Update the contract address in `frontend/src/App.tsx` (`CONTRACT_ADDRESS`).
+- Customize UI in `frontend/src/App.tsx` and other components as needed.
+
+### 3. Farcaster Integration
+
+- Edit `public/.well-known/farcaster.json` to describe your miniapp.
+- Add your production URL to `<meta name="fc:frame">` in `public/index.html`.
+- See [Farcaster Mini-App docs](https://docs.farcaster.xyz/developers/miniapps) for manifest and frame embed requirements.
+
+## 🧩 File Structure
+
+```
+farcaster-arbitrum-miniapp-starter/
+├── contracts/                  # Stylus (Rust) smart contracts
+│   └── template/
+│       ├── src/lib.rs          # NFT contract logic (ERC721)
+│       ├── package.json        # Contract workspace package definition
+│       └── README.md
+├── public/                     # Static assets, Farcaster manifest, NFT images
+│   └── .well-known/farcaster.json
+├── frontend/src/
+│   ├── abi/                    # Contract ABIs (JSON)
+│   ├── App.tsx                 # Main React app
+│   ├── wagmi.ts                # Wagmi config (chains, connectors)
+│   ├── hooks/
+│   │   └── usePublicClient.ts  # viem public client
+│   ├── viemChains.ts           # Chain definitions (Nitro localhost, Arbitrum, Sepolia)
+│   └── package.json            # Frontend workspace package definition
+├── pnpm-workspace.yaml         # pnpm monorepo workspace config
+├── package.json                # Root package definition (meta)
+├── README.md
+└── ...
 ```
 
-```bash
-cargo stylus deploy -e http://127.0.0.1:8547 --private-key "$your_private_key"
-```
+### ✍️ Contract Development
 
-> It is okay if it says your contract is already verified.
+- Write your Stylus contract in Rust.
+- Export the ABI after building:
+  ```bash
+  cargo stylus export-abi --json
+  ```
+- Copy the ABI to `frontend/src/abi/SampleNFT.json`.
 
----
+### ⚛️ Frontend Customization
 
-> 🏃 Head to your next challenge [here](https://www.speedrunstylus.com/challenge/simple-nft-example).
+- Change branding, app name, and icons in `public/` and inside `frontend/src/`.
+- Add or remove UI components in `frontend/src/App.tsx`.
+
+### 🔗 Farcaster & Wallet
+
+- Supports both browser wallets and Farcaster Frame connector.
+- Add your app to Farcaster via the manifest and meta tags.
+
+## 📚 Resources
+
+- [Farcaster Mini-Apps](https://docs.farcaster.xyz/developers/miniapps)
+- [Arbitrum Stylus](https://docs.arbitrum.io/stylus/)
+- [Nitro Dev Node Repository](https://github.com/OffchainLabs/nitro-devnode)
+- [OpenZeppelin Stylus](https://docs.openzeppelin.com/contracts/4.x/stylus)
+- [Arbitrum Sepolia Testnet](https://sepolia.arbiscan.io/)
+- [wagmi](https://wagmi.sh/)
+- [viem](https://viem.sh/)
+- [Vite](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
